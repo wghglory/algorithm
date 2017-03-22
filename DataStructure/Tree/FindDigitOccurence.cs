@@ -1,59 +1,45 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 
-/*determine if BST has duplicate values
- * solution: in-order traversal and check if current node value equals to prev
+/* find each digit occurence. very similar to find BST duplicates
 */
-public class FindBSTduplicates
+public class FindDigitOccurence
 {
 
 	public static void Main(string[] args)
 	{
 		TreeNode<int> root = DefineBST();
 
-		BFS<int> bfs = new BFS<int>();
-		//bfs.Traversal(root);
+		TreeFreq(root);
 
-
-		DFS<int> dfs = new DFS<int>();
-
-
-		dfs.InOrderToList(root);
-		if (dfs.List.Distinct().Count() == dfs.List.Count())
+		for (int i = 0; i < 10; i++)
 		{
-			Console.WriteLine("no duplicates");
+			Console.WriteLine($"{i}: {digitFreq[i]}");
 		}
-		else
-		{
-			Console.WriteLine("has duplicates");
-		}
-
-
-
-		dfs.InOrderToHashSet(root);
-		foreach (var v in dfs.Set)
-		{
-			Console.WriteLine(v);
-		}
-
-
-		// issue: don't break when finding a duplicate
-		//Console.WriteLine(dfs.InOrderCheckDuplicates(root));
-
-
-
-		dfs.InOrderFindDuplicates(root);
-		foreach (KeyValuePair<int, int> dic in dfs.Dic)
-		{
-			Console.WriteLine($"{dic.Key}: {dic.Value}");
-		}
-
 	}
 
+	public static int[] digitFreq = new int[10];
 
+	public static void TreeFreq(TreeNode<int> tree)
+	{
+		/* Base Case */
+		if (tree == null)
+		{
+			return;
+		}
 
+		/* Visit Node, check digit frequency */
+		int number = tree.Data;
+		while (number != 0)
+		{
+			digitFreq[number % 10]++;
+			number /= 10;
+		}
+
+		TreeFreq(tree.Left);    /* Check left sub-tree */
+		TreeFreq(tree.Right);   /* Check right sub-tree */
+	}
 
 
 	private static TreeNode<int> DefineBST()
@@ -165,20 +151,6 @@ public class DFS<T>  //Depth first search, recursion
 		}
 	}
 
-	// check if there is any duplicate, known issue: this continues to call recursively even finding a duplicates and return false, but last call may still return true.
-	public bool InOrderCheckDuplicates(TreeNode<T> node)
-	{
-		if (node != null)
-		{
-			InOrderCheckDuplicates(node.Left);
-			if (!Set.Add(node.Data))  // duplicates
-			{
-				return false;
-			}
-			InOrderCheckDuplicates(node.Right);
-		}
-		return true;
-	}
 
 	// dictionary list all values and their appearance count
 	public void InOrderFindDuplicates(TreeNode<T> node)
