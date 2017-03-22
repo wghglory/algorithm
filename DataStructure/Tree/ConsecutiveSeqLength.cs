@@ -1,6 +1,6 @@
 using System;
 
-/*find max consecutive number sequence count*/
+/*find max consecutive number sequence length*/
 public class MaxSeqLenInTree
 {
 
