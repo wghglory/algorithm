@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public class Program
 {
@@ -32,7 +33,10 @@ public class Program
 		TreeNode<int> ancestor = LowestCommonAncestor(root, z2, y2);
 		Console.Write(ancestor.Data);
 
-
+		// print path for a given node
+		PrintPath(root, z2);
+		path.Reverse();
+		Console.WriteLine(string.Join("-->", path));
 	}
 
 	// * Time complexity O(n)
@@ -65,11 +69,45 @@ public class Program
 		return (left != null) ? left : right;
 	}
 
-	// another idea: find path of node a and node b. Then compare these 2 list, not good as above
+	// another idea: find path of node a and node b. Then compare these 2 list, not good as above because of space
+	public static List<int> path = new List<int>();
+	public static bool PrintPath(TreeNode<int> root, TreeNode<int> targetNode)
+	{
+		if (root == null) return false;
+
+		if (root == targetNode || PrintPath(root.Left, targetNode) || PrintPath(root.Right, targetNode))
+		{
+			//Console.Write("  " + root.data);
+			path.Add(root.Data);
+			return true;
+		}
+
+		return false;
+	}
 
 }
 
 
+//https://www.youtube.com/watch?v=TIoCCStdiFo
+public class LowestCommonAncestoryBinarySearchTree
+{
+
+	public TreeNode<int> lowestCommonAncestor(TreeNode<int> root, int p, int q)
+	{
+		if (root.Data > Math.Max(p, q))
+		{
+			return lowestCommonAncestor(root.Left, p, q);
+		}
+		else if (root.Data < Math.Min(p, q))
+		{
+			return lowestCommonAncestor(root.Right, p, q);
+		}
+		else
+		{
+			return root;
+		}
+	}
+}
 
 
 public class TreeNode<T>
