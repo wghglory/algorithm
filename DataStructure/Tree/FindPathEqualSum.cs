@@ -104,6 +104,38 @@ public class RootToLeafToSum
 			Console.Write("No path for sum " + 29);
 		}
 	}
+
+
+	/*
+     Given a tree and a sum, return true if there is a path from the root
+     down to a leaf, such that adding up all the values along the path
+     equals the given sum.
+
+     Strategy: subtract the node value from the sum when recurring down,
+     and check to see if the sum is 0 when you run out of tree.
+     */
+
+	static bool haspathSum(Node node, int sum)
+	{
+		if (node == null)
+			return (sum == 0);
+		else
+		{
+			bool ans = false;
+
+			/* otherwise check both subtrees */
+			int subsum = sum - node.Data;
+			if (subsum == 0 && node.Left == null && node.Right == null)
+				return true;
+			if (node.Left != null)
+				ans = ans || haspathSum(node.Left, subsum);
+			if (node.Right != null)
+				ans = ans || haspathSum(node.Right, subsum);
+			return ans;
+		}
+	}
+
+
 }
 
 public class Node
