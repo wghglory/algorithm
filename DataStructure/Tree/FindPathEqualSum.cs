@@ -103,6 +103,9 @@ public class RootToLeafToSum
 		{
 			Console.Write("No path for sum " + 29);
 		}
+
+		Console.WriteLine(haspathSum(node, 10));
+		Console.WriteLine(hasPathSum(node, 10));
 	}
 
 
@@ -135,6 +138,41 @@ public class RootToLeafToSum
 		}
 	}
 
+	public static bool hasPathSum(Node root, int sum)
+	{
+		if (root == null) return false;
+
+		Queue<Node> nodes = new Queue<Node>();
+		Queue<int> values = new Queue<int>();
+
+		nodes.Enqueue(root);
+		values.Enqueue(root.Data);
+
+		while (nodes.Count > 0)
+		{
+			Node curr = nodes.Dequeue();
+			int sumValue = values.Dequeue();
+
+			if (curr.Left == null && curr.Right == null && sumValue == sum)
+			{
+				return true;
+			}
+
+			if (curr.Left != null)
+			{
+				nodes.Enqueue(curr.Left);
+				values.Enqueue(sumValue + curr.Left.Data);
+			}
+
+			if (curr.Right != null)
+			{
+				nodes.Enqueue(curr.Right);
+				values.Enqueue(sumValue + curr.Right.Data);
+			}
+		}
+
+		return false;
+	}
 
 }
 
