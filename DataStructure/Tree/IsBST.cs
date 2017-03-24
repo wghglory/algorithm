@@ -1,87 +1,166 @@
-package com.interview.tree;
-
-import java.util.Deque;
-import java.util.LinkedList;
-
+using System;
+using System.Collections.Generic;
 /**
- * Date 04/11/2015
- * @author tusroy
- *
- * Youtube link - https://youtu.be/MILxfAbIhrE
- *
- * Given a binary tree, return true if it is binary search tree else return false.
- *
- * Solution
- * Keep min, max for every recursion. Initial min and max is very small and very larger
- * number. Check if root.data is in this range. When you go left pass min and root.data and
- * for right pass root.data and max.
- *
- * Time complexity is O(n) since we are looking at all nodes.
- *
- * Test cases:
- * Null tree
- * 1 or 2 nodes tree
- * Binary tree which is actually BST
- * Binary tree which is not a BST
- */
-public class IsBST {
+* Date 04/11/2015
+* @author tusroy
+*
+* Youtube link - https://youtu.be/MILxfAbIhrE
+*
+* Given a binary tree, return true if it is binary search tree else return false.
+*
+* Solution
+* Keep min, max for every recursion. Initial min and max is very small and very larger
+* number. Check if root.Data is in this range. When you go Left pass min and root.Data and
+* for Right pass root.Data and max.
+*
+* Time complexity is O(n) since we are looking at all nodes.
+*
+* Test cases:
+* Null tree
+* 1 or 2 nodes tree
+* Binary tree which is actually BST
+* Binary tree which is not a BST
+*/
+public class IsBST
+{
 
-    public boolean isBST(Node root){
-        return isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
-    }
+	public bool isBST(Node root)
+	{
+		return isBST1(root, int.MinValue, int.MaxValue);
+	}
 
-    private boolean isBST(Node root, int min, int max){
-        if(root == null){
-            return true;
-        }
-        if(root.data <= min || root.data > max){
-            return false;
-        }
-        return isBST(root.left, min, root.data) && isBST(root.right, root.data, max);
-    }
+	private bool isBST1(Node root, int min, int max)
+	{
+		if (root == null)
+		{
+			return true;
+		}
+		if (root.Data < min || root.Data > max)
+		{
+			return false;
+		}
+		return isBST1(root.Left, min, root.Data) && isBST1(root.Right, root.Data, max);
+	}
 
 
-    public boolean isBSTIterative(Node root) {
-        if (root == null) {
-            return true;
-        }
+	public bool isBST2(Node root)
+	{
+		if (root == null)
+		{
+			return true;
+		}
 
-        Deque<Node> stack = new LinkedList<>();
-        Node node = root;
-        int prev = Integer.MIN_VALUE;
-        int current;
-        while ( true ) {
-            if (node != null) {
-                stack.addFirst(node);
-                node = node.left;
-            } else {
-                if (stack.isEmpty()) {
-                    break;
-                }
-                node = stack.pollFirst();
-                current = node.data;
-                if (current < prev) {
-                    return false;
-                }
-                prev = current;
-                node = node.right;
-            }
-        }
-        return true;
-    }
+		Stack<Node> stack = new Stack<Node>();
+		Node node = root;
+		int prev = int.MinValue;
+		int current;
+		while (true)
+		{
+			if (node != null)
+			{
+				stack.Push(node);
+				node = node.Left;
+			}
+			else
+			{
+				if (stack.Count == 0)
+				{
+					break;
+				}
+				node = stack.Pop();
+				current = node.Data;
+				if (current < prev)
+				{
+					return false;
+				}
+				prev = current;
+				node = node.Right;
+			}
+		}
+		return true;
+	}
 
-    public static void main(String args[]){
-        BinaryTree bt = new BinaryTree();
-        Node root = null;
-        root = bt.addNode(10, root);
-        root = bt.addNode(15, root);
-        root = bt.addNode(-10, root);
-        root = bt.addNode(17, root);
-        root = bt.addNode(20, root);
-        root = bt.addNode(0, root);
+	// in order traverse, every next node >= current
+	public bool isBST3(Node root, int prev)
+	{
+		if (root == null)
+			return true;
 
-        IsBST isBST = new IsBST();
-        assert isBST.isBST(root);
-        assert isBST.isBSTIterative(root);
-    }
+		return isBST3(root.Left, prev) // previous node
+			&& (root.Data >= prev) // current node
+			&& isBST3(root.Right, prev = root.Data); // next node
+	}
+
+	public static void Main(string[] args)
+	{
+		Node root = DefineBST();
+
+		IsBST isBST = new IsBST();
+
+		Console.WriteLine(isBST.isBST(root));
+		Console.WriteLine(isBST.isBST2(root));
+		Console.WriteLine(isBST.isBST3(root, int.MinValue));
+	}
+
+	private static Node DefineBST()
+	{
+
+		//          5
+		//        /   \
+		//       2     10
+		//      / \    / \
+		//     1   3   7  12
+		//             /\
+		//            6  7
+
+
+		Node node = new Node();
+		node.Data = 5;
+		node.Right = new Node();
+		node.Left = new Node();
+
+		node.Left.Data = 2;
+		node.Right.Data = 10;
+
+		node.Left.Left = new Node();
+		node.Left.Right = new Node();
+		node.Left.Left.Data = 1;
+		node.Left.Right.Data = 3;
+
+		node.Right.Left = new Node();
+		node.Right.Right = new Node();
+		node.Right.Left.Data = 7;
+		node.Right.Right.Data = 12;
+
+		node.Right.Left.Left = new Node();
+		node.Right.Left.Right = new Node();
+		node.Right.Left.Left.Data = 6;
+		node.Right.Left.Right.Data = 7;  //7, 8
+
+		return node;
+	}
+}
+
+
+public class Node
+{
+	public int Data;
+	public Node Left;
+	public Node Right;
+
+	public Node(int Data, Node Left, Node Right)
+	{
+		this.Data = Data;
+		this.Left = Left;
+		this.Right = Right;
+	}
+
+	public Node(int Data)
+	{
+		this.Data = Data;
+		this.Left = null;
+		this.Right = null;
+	}
+
+	public Node() { }
 }
