@@ -3,9 +3,6 @@ using System.Collections.Generic;
 
 class Program
 {
-
-
-
 	static void Main(string[] args)
 	{
 		//Find the Running Median
@@ -33,4 +30,3 @@ class Program
 	}
 
 }
-
