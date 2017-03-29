@@ -26,12 +26,13 @@ public class LinkedList
 		Node next = null;
 		while (current != null)
 		{
+			// next prev current
 			next = current.next;
 			current.next = prev;
 			prev = current;
 			current = next;
 		}
-		node = prev;
+		node = prev;  //head node
 		return node;
 	}
 
