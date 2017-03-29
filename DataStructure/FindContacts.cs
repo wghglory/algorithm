@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 class Program
 {
-	//Sample Input, find start with
+	//find start with input
 	//add hack
 	//add hackerrank
 	//find hac
@@ -12,11 +12,9 @@ class Program
 	//Sample Output
 	//2
 	//0
+
+	//bug: add add am
 	static HashSet<string> Names = new HashSet<string>();
-	public static void AddName(string name)
-	{
-		Names.Add(name);
-	}
 
 	public static int CountNames(string search)
 	{
@@ -37,7 +35,6 @@ class Program
 		string input = "";
 		while ((input = Console.ReadLine()) != null)
 		{
-
 			if (!string.IsNullOrEmpty(input.Trim()))
 			{
 				if (input.IndexOf("add ") != -1)  // add new contact
@@ -49,10 +46,6 @@ class Program
 					Console.WriteLine(CountNames(input.Replace("find ", "")));
 				}
 			}
-
 		}
-
 	}
-
 }
-

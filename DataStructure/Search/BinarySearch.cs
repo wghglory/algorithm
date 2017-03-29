@@ -8,30 +8,35 @@ class Program
 	{
 		int[] arr = { 1, 2, 3, 4, 5, 8, 10, 44, 55, 66, 100 };   // 11 numbers
 
-		Console.WriteLine(BinarySearch(93, arr));
-		Console.WriteLine(BinarySearch(0, arr));
-		Console.WriteLine("index: " + BinarySearch(100, arr));
-		Console.WriteLine("index: " + BinarySearch(3, arr));
-
+		Console.WriteLine(BinarySearchRecusive(0, arr));   //-1 not existing
+		Console.WriteLine("recurison method\t index: " + BinarySearchRecusive(100, arr));
+		Console.WriteLine("recurison method\t index: " + BinarySearchRecusive(3, arr));
 		Console.WriteLine("Iterative method\t index: " + BinarySearchIterative(100, arr));
+
+		// binary search usage:
+		int[] test = { 10, 44, 44, 44, 55, 66 };
+		Console.WriteLine($"first duplicate index: {FindFirstDuplicateIndex(test, 44)}");
+		Console.WriteLine($"last duplicate index: {FindLastDuplicateIndex(test, 44)}");
+
+		int[] nums = { 1, 2, 3, 4, 7, 6, 5 };
+		Console.WriteLine($"first decreasing index: {FindDecreasingIndex(nums)}");
 		Console.ReadKey();
+
 	}
 
-
-	//find target index
-	public static int BinarySearch(int target, int[] nums)
+	public static int BinarySearchRecusive(int target, int[] nums)
 	{
 		return BinarySearchRecusive(target, nums, 0, nums.Length - 1);
 	}
 
-	private static int BinarySearchRecusive(int target, int[] nums, int floorIndex, int ceilIndex)
+	private static int BinarySearchRecusive(int target, int[] nums, int leftIndex, int rightIndex)
 	{
-		if (floorIndex > ceilIndex)
+		if (leftIndex > rightIndex)
 		{
 			return -1;  // when target is less than smallest number or bigger than biggest number
 		}
 
-		int mid = floorIndex + (ceilIndex - floorIndex) / 2;
+		int mid = leftIndex + (rightIndex - leftIndex) / 2;
 
 		if (nums[mid] == target)
 		{
@@ -39,23 +44,23 @@ class Program
 		}
 		else if (nums[mid] < target)
 		{
-			return BinarySearchRecusive(target, nums, mid + 1, ceilIndex);
+			return BinarySearchRecusive(target, nums, mid + 1, rightIndex);
 		}
 		else
 		{
-			return BinarySearchRecusive(target, nums, floorIndex, mid - 1);
+			return BinarySearchRecusive(target, nums, leftIndex, mid - 1);
 		}
 	}
 
 
 	public static int BinarySearchIterative(int target, int[] arr)
 	{
-		int floorIndex = 0;
-		int ceilIndex = arr.Length - 1;
+		int left = 0;
+		int right = arr.Length - 1;
 
-		while (floorIndex <= ceilIndex)
+		while (left <= right)
 		{
-			int mid = (floorIndex + ceilIndex) / 2;   //may 2 large int plus, stackoverflow
+			int mid = (left + right) / 2;   //may 2 large int plus, stackoverflow
 
 			if (arr[mid] == target)
 			{
@@ -63,40 +68,21 @@ class Program
 			}
 			else if (arr[mid] > target)
 			{
-				ceilIndex = mid - 1;
+				right = mid - 1;
 			}
 			else
 			{
-				floorIndex = mid + 1;
+				left = mid + 1;
 			}
 		}
 		return -1;   // doesn't have target
 	}
-}
 
 
-//binary search usage:
-using System;
-using System.Collections.Generic;
-
-class Program
-{
 	/*1. Find first/last instance's index of a number in sorted array where duplicates are allowed.
 	e.g. find first/last 44
 	find key occurrence: lastIndex - firstIndex + 1;
 	*/
-	static void Main(string[] args)
-	{
-		int[] arr = { 1, 2, 3, 4, 5, 8, 10, 44, 44, 66, 100 };   // 11 numbers
-
-		Console.WriteLine($"first duplicate index: {FindFirstDuplicateIndex(arr, 44)}");
-		Console.WriteLine($"last duplicate index: {FindLastDuplicateIndex(arr, 44)}");
-
-		int[] nums = { 1, 2, 3, 4, 7, 6, 5 };
-		Console.WriteLine($"first decreasing index: {FindDecreasingIndex(nums)}");
-		Console.ReadKey();
-	}
-
 	private static int FindFirstDuplicateIndex(int[] arr, int key)
 	{
 		int leftIndex = 0;
@@ -132,8 +118,14 @@ class Program
 		{
 			int mid = leftIndex + (rightIndex - leftIndex) / 2;
 
-			if (arr[mid] == key && arr[mid - 1] == arr[mid])  //only change here
+			// 44,44,44,55. 44 == pervious 44 and != next 55
+			if (arr[mid] == key && arr[mid - 1] == arr[mid])  //find target
 			{
+				if (arr[mid] == arr[mid + 1]) // not last target
+				{
+					leftIndex = mid + 1;
+					continue;
+				}
 				return mid;
 			}
 			else if (arr[mid] < key)
@@ -145,7 +137,6 @@ class Program
 				rightIndex = mid - 1;
 			}
 		}
-
 		return -1;
 	}
 
@@ -176,5 +167,4 @@ class Program
 		return -1;
 
 	}
-
 }

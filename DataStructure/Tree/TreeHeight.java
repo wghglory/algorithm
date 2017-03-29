@@ -71,12 +71,15 @@ public class BinaryTree {
     }
 
     public int height(Node root){
-        if(root == null){
-            return 0;
+        // ask for height with a demo
+        if (root == null)
+        {
+            return -1;
         }
-        int leftHeight  = height(root.left);
-        int rightHeight = height(root.right);
-        return Math.max(leftHeight, rightHeight) + 1;
+        else
+        {
+            return 1 + Math.max(height(root.left), height(root.right));
+        }
     }
 
     public static void main(String args[]){

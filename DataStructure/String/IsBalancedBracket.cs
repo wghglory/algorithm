@@ -1,17 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 class Program
 {
-
 	static void Main(string[] args)
 	{
-
-		Console.Write(IsBalancedBracket("()[]{}"));
-
+		Console.Write(IsBalancedBracket("(fads)[]{}"));
 		Console.ReadKey();
 	}
-
 
 	// amazon online assessment 2017-3-3 seattle
 	public static bool IsBalancedBracket(string str)
@@ -25,7 +21,6 @@ class Program
 			{
 				s.Push(str[i]);
 			}
-
 			else if (str[i] == ')' || str[i] == '}' || str[i] == ']')  // detect close bracket
 			{
 				if (s.Count == 0 || s.Peek() != Getpair(str[i]))  // check if peek match opener or not
@@ -56,6 +51,4 @@ class Program
 			return '[';
 		}
 	}
-
 }
-
