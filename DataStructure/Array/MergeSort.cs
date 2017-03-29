@@ -1,46 +1,67 @@
 using System;
 
-// Divide and Conquer
-// Recursion
-
-public class Sort
+public class MergeSortAlgo
 {
-	public static void mergeSort(int[] arr, int left, int right)
+	// Function to Merge Arrays L and R into A.
+	// lefCount = number of elements in L
+	// rightCount = number of elements in R.
+	static void Merge(int[] arr, int[] left, int[] right)
 	{
-		if (left >= right)
-			return;
-		int mid = left + (right - left) / 2;
-		mergeSort(arr, left, mid);
-		mergeSort(arr, mid + 1, right);
-		merge(arr, left, mid, right);
+		int i, j, k;
+
+		// i - to mark the index of left aubarray (L)
+		// j - to mark the index of right sub-raay (R)
+		// k - to mark the index of merged subarray (A)
+		i = 0; j = 0; k = 0;
+
+		while (i < left.Length && j < right.Length)
+		{
+			if (left[i] < right[j]) arr[k++] = left[i++];
+			else arr[k++] = right[j++];
+		}
+		// only one of below execute
+		while (i < left.Length) arr[k++] = left[i++];
+		while (j < right.Length) arr[k++] = right[j++];
 	}
 
-	private static void merge(int[] arr, int left, int mid, int right)
+	// Recursive function to sort an array of integers.
+	static void MergeSort(int[] arr)
 	{
-		int[] newarr = new int[right - left + 1];
+		int mid;
+		int n = arr.Length;
+		if (n < 2) return; // base condition. If the array has less than two element, do nothing.
 
-		for (int i = left; i <= right; i++)
-			newarr[i - left] = arr[i];
+		mid = n / 2;  // find the mid index.
 
-		int l = 0;
-		int r = mid - left + 1;
-		for (int i = left; i <= right; i++)
-		{
-			if (l > mid - left)
-				arr[i] = newarr[r++];
-			else if (r > right - left)
-				arr[i] = newarr[l++];
-			else
-				arr[i] = newarr[l] < newarr[r] ? newarr[l++] : newarr[r++];
-		}
+		// create left and right subarrays
+		// mid elements (from index 0 till mid-1) should be part of left sub-array
+		// and (n-mid) elements (from mid to n-1) will be part of right sub-array
+		int[] left = new int[mid];
+		int[] right = new int[n - mid];
+
+		for (int i = 0; i < mid; i++) left[i] = arr[i]; // creating left subarray
+		for (int i = mid; i < n; i++) right[i - mid] = arr[i]; // creating right subarray
+
+		MergeSort(left);  // sorting the left subarray
+		MergeSort(right);  // sorting the right subarray
+		Merge(arr, left, right);  // Merging L and R into A as sorted list.
 	}
 
 	public static void Main(string[] args)
 	{
-		int[] arr = { 4, 7, 3, 5, 6, 5, 8, 4, 3, 2, 4, 5, 4 };
+		int[] arr = { 6, 2, 3, 1, 9, 10, 15, 13, 12, 17 }; // creating an array of integers.
 
-		mergeSort(arr, 0, arr.Length - 1);
 
-		Console.WriteLine(string.Join(",", arr));
+		// finding number of elements in array as size of complete array in bytes divided by size of integer in bytes.
+		// This won't work if array is passed to the function because array
+		// is always passed by reference through a pointer. So sizeOf function will give size of pointer and not the array.
+		// Watch this video to understand this concept - http://www.youtube.com/watch?v=CpjVucvAc3g
+
+
+		// Calling merge sort to sort the array.
+		MergeSort(arr);
+
+		//printing all elements in the array once its sorted.
+		for (int i = 0; i < arr.Length; i++) Console.Write(arr[i] + " ");
 	}
 }

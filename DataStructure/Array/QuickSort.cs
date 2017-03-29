@@ -17,7 +17,7 @@ public class Sort
 	private static int partition(int[] arr, int start, int end)
 	{
 		int pivot = arr[end];
-		int partitionIndex = start;
+		int partitionIndex = start;  //stopped if element bigger than pivot
 		for (int i = start; i < end; i++)   //any element lesser than pivot is on the left, exit partitionIndex is the first element bigger than pivot
 		{
 			if (arr[i] <= pivot)
