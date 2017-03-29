@@ -50,7 +50,6 @@ class Program
 
 public class Convert
 {
-
 	// BFS
 	public DoublyLinkedListNode ToDoubleLinkedListNode(TreeNode root)
 	{
@@ -72,7 +71,7 @@ public class Convert
 			// take 2 and 4 for instance, now 0 and 2 are linked to each other, [0, 2] 2 is last node in ddl,
 			// we want to find tail node in ddl and build pointers to rightNode
 
-			DoublyLinkedListNode tailNode = FIndTailNodeInDLL(convertedNode);
+			DoublyLinkedListNode tailNode = FindTailNodeInDLL(convertedNode);
 			rightNode.Previous = tailNode;  // rightNode 4 previous node should be tailNode 2
 			tailNode.Next = rightNode;      // tailNode 2 next node should be rightNode 4
 		}
@@ -82,7 +81,7 @@ public class Convert
 	}
 
 	// tail dll node
-	private static DoublyLinkedListNode FIndTailNodeInDLL(DoublyLinkedListNode node)
+	private static DoublyLinkedListNode FindTailNodeInDLL(DoublyLinkedListNode node)
 	{
 		while (node.Next != null)
 		{
