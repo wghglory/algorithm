@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 
 /*http://codercareer.blogspot.com/2011/09/no-06-post-order-traversal-sequences-of.html
-
 given a sequence, can it be post order of a BST?
-
 */
+
+// stupid thought but easy soluton: retrieve each each from array and build the BST, do in-order traverse and sort array, compare
+
 public class IsSequencePostOrderOfBST
 {
-
 	bool VerifySquenceOfBST(int[] sequence, int length)
 	{
 		if (sequence == null || length <= 0)
@@ -49,12 +49,13 @@ public class IsSequencePostOrderOfBST
 	{
 		IsSequencePostOrderOfBST h = new IsSequencePostOrderOfBST();
 		Console.WriteLine(h.VerifySquenceOfBST(new int[] { 5, 7, 6, 9, 11, 10, 8 }, 7));
-		Console.WriteLine(h.VerifySquenceOfBST(new int[] { 79, 7, 6, 9, 11, 10, 8 }, 7));
+		//bug: 11,10 will be larger group,
+		//if perfect BST, can be fixed by check first larger element % 3 == 1
+		Console.WriteLine(h.VerifySquenceOfBST(new int[] { 5, 7, 6, 5, 11, 10, 8 }, 7));
 	}
 
 	private static Node DefineBST()
 	{
-
 		//          5
 		//        /   \
 		//       2     10
@@ -62,7 +63,6 @@ public class IsSequencePostOrderOfBST
 		//     1   3   7  12
 		//             /\
 		//            6  8
-
 
 		Node node = new Node();
 		node.Data = 5;

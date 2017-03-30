@@ -27,24 +27,17 @@ using System.Collections.Generic;
 public class RootToLeafToSum
 {
 
-	public bool printPath(Node node, int sum, List<Node> path)
+	public bool printPath(Node node, int sum, List<Node> path)   //sum is number passed to next childnode
 	{
 		if (node == null)
 		{
 			return false;
 		}
 
-		if (node.Left == null && node.Right == null)   //leaf
+		if (node.Left == null && node.Right == null && node.Data == sum)   //leaf
 		{
-			if (node.Data == sum)
-			{
-				path.Add(node);
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			path.Add(node);
+			return true;
 		}
 		if (printPath(node.Left, sum - node.Data, path) || printPath(node.Right, sum - node.Data, path))
 		{
@@ -62,11 +55,11 @@ public class RootToLeafToSum
 		//        /   \
 		//       2     10
 		//      / \    / \
-		//     27   3   7  12
+		//     22   3   7  12
 		//             /\
 		//            6  7
 
-		// sum = 29, 2 paths: 5-2-27, 5-10-7-7, but this solution only finds the first path
+		// sum = 29, 2 paths: 5-2-22, 5-10-7-7, but this solution only finds the first path
 		// if needs to find all paths, see FindPathsFromRootToLeaf.cs and check all paths' sum
 
 		Node node = new Node();
@@ -121,21 +114,26 @@ public class RootToLeafToSum
 	static bool haspathSum(Node node, int sum)
 	{
 		if (node == null)
-			return (sum == 0);
-		else
-		{
-			bool ans = false;
+			return false;
 
-			/* otherwise check both subtrees */
-			int subsum = sum - node.Data;
-			if (subsum == 0 && node.Left == null && node.Right == null)
-				return true;
-			if (node.Left != null)
-				ans = ans || haspathSum(node.Left, subsum);
-			if (node.Right != null)
-				ans = ans || haspathSum(node.Right, subsum);
-			return ans;
-		}
+		bool result = false;
+
+		/* otherwise check both subtrees */
+		//int subsum = sum - node.Data;
+		//if (subsum == 0 && node.Left == null && node.Right == null)
+		//	return true;
+		//if (node.Left != null)
+		//	result = result || haspathSum(node.Left, subsum);
+		//if (node.Right != null)
+		//	result = result || haspathSum(node.Right, subsum);
+
+		if (sum == node.Data && node.Left == null && node.Right == null)
+			return true;
+		if (node.Left != null)
+			result = result || haspathSum(node.Left, sum - node.Data);
+		if (node.Right != null)
+			result = result || haspathSum(node.Right, sum - node.Data);
+		return result;
 	}
 
 	public static bool hasPathSum(Node node, int sum)

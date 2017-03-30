@@ -63,7 +63,7 @@ public class InOrderIterator<T>
 	{
 		if (current == null)
 			return;
-		fillStack(current.Right);
+		fillStack(current.Right);  //big-->middle-->small, when pop: small-->middle-->big
 		s.Push(current);
 		fillStack(current.Left);
 		return;

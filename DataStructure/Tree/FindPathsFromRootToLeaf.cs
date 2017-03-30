@@ -51,13 +51,13 @@ class BinaryTree
 	}
 
 	/* Utility function that prints out an array on a line. */
-	void printArray(int[] ints, int len)
+	void printArray(int[] arr, int len)
 	{
 		for (int i = 0; i < len - 1; i++)
 		{
-			Console.Write(ints[i] + "-->");
+			Console.Write(arr[i] + "-->");
 		}
-		Console.Write(ints[len - 1] + "\n");
+		Console.Write(arr[len - 1] + "\n");
 	}
 
 	// driver program to test above functions

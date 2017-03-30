@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 public class Program
 {
-
 	public static void Main(string[] args)
 	{
-
 		TreeNode<int> root = new TreeNode<int>(11);
 		TreeNode<int> x1 = new TreeNode<int>(2);
 		TreeNode<int> y1 = new TreeNode<int>(3);
@@ -43,28 +41,26 @@ public class Program
 	// * Space complexity O(h)
 	//https://www.youtube.com/watch?v=13m9ZCB8gjw
 	//https://github.com/mission-peace/interview/blob/master/src/com/interview/tree/LowestCommonAncestorInBinaryTree.java
-	public static TreeNode<int> LowestCommonAncestor(TreeNode<int> root, TreeNode<int> a, TreeNode<int> b)
+	public static TreeNode<int> LowestCommonAncestor(TreeNode<int> node, TreeNode<int> a, TreeNode<int> b)
 	{
-		if (root == null)
+		if (node == null)
 		{
 			return null;
 		}
 
 		// If the root is one of a or b, then it is the LCA
-		if (root == a || root == b)
+		if (node == a || node == b)
 		{
-			return root;
+			return node;
 		}
 
-		TreeNode<int> left = LowestCommonAncestor(root.Left, a, b);
-		TreeNode<int> right = LowestCommonAncestor(root.Right, a, b);
+		TreeNode<int> left = LowestCommonAncestor(node.Left, a, b);
+		TreeNode<int> right = LowestCommonAncestor(node.Right, a, b);
 
 		// If both nodes lie in left or right then their LCA is in left or right,
 		// Otherwise root is their LCA
-		if (left != null && right != null)
-		{
-			return root;
-		}
+		if (left != null && right != null) return node;
+		if (left == null && right == null) return null;  //leaf
 
 		return (left != null) ? left : right;
 	}

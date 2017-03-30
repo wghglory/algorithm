@@ -29,33 +29,36 @@ public class IsBST
 		return isBST1(root, int.MinValue, int.MaxValue);
 	}
 
-	private bool isBST1(Node root, int min, int max)
+	//every node: left < parent < right,
+	// min < left < parent
+	// parent < right < max
+	private bool isBST1(Node node, int min, int max)
 	{
-		if (root == null)
+		if (node == null)
 		{
 			return true;
 		}
-		if (root.Data < min || root.Data > max)
+		if (node.Data < min || node.Data > max)
 		{
 			return false;
 		}
-		return isBST1(root.Left, min, root.Data) && isBST1(root.Right, root.Data, max);
+		return isBST1(node.Left, min, node.Data) && isBST1(node.Right, node.Data, max);
 	}
 
 
-	public bool isBST2(Node root)
+	public bool isBST2(Node node)
 	{
-		if (root == null)
+		if (node == null)
 		{
 			return true;
 		}
 
 		Stack<Node> stack = new Stack<Node>();
-		Node node = root;
 		int prev = int.MinValue;
 		int current;
 		while (true)
 		{
+			// push all smaller data into stack, top is smallest if BST
 			if (node != null)
 			{
 				stack.Push(node);
@@ -81,14 +84,14 @@ public class IsBST
 	}
 
 	// in order traverse, every next node >= current
-	public bool isBST3(Node root, int prev)
+	public bool isBST3(Node node, int prev)
 	{
-		if (root == null)
+		if (node == null)
 			return true;
 
-		return isBST3(root.Left, prev) // previous node
-			&& (root.Data >= prev) // current node
-			&& isBST3(root.Right, prev = root.Data); // next node
+		return isBST3(node.Left, prev) // previous node
+			&& (node.Data >= prev) // current node
+			&& isBST3(node.Right, prev = node.Data); // next node
 	}
 
 	public static void Main(string[] args)

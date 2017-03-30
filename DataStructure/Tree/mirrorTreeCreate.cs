@@ -47,7 +47,6 @@ public class Program
 		node.Right = temp;
 		mirrorTree(node.Left);
 		mirrorTree(node.Right);
-
 	}
 
 	public static void BFS(TreeNode<int> root)
