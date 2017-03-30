@@ -27,18 +27,18 @@ using System.Collections.Generic;
 public class RootToLeafToSum
 {
 
-	public bool printPath(Node root, int sum, List<Node> path)
+	public bool printPath(Node node, int sum, List<Node> path)
 	{
-		if (root == null)
+		if (node == null)
 		{
 			return false;
 		}
 
-		if (root.Left == null && root.Right == null)   //leaf
+		if (node.Left == null && node.Right == null)   //leaf
 		{
-			if (root.Data == sum)
+			if (node.Data == sum)
 			{
-				path.Add(root);
+				path.Add(node);
 				return true;
 			}
 			else
@@ -46,9 +46,9 @@ public class RootToLeafToSum
 				return false;
 			}
 		}
-		if (printPath(root.Left, sum - root.Data, path) || printPath(root.Right, sum - root.Data, path))
+		if (printPath(node.Left, sum - node.Data, path) || printPath(node.Right, sum - node.Data, path))
 		{
-			path.Add(root);
+			path.Add(node);
 			return true;
 		}
 		return false;
@@ -138,15 +138,15 @@ public class RootToLeafToSum
 		}
 	}
 
-	public static bool hasPathSum(Node root, int sum)
+	public static bool hasPathSum(Node node, int sum)
 	{
-		if (root == null) return false;
+		if (node == null) return false;
 
 		Queue<Node> nodes = new Queue<Node>();
 		Queue<int> values = new Queue<int>();
 
-		nodes.Enqueue(root);
-		values.Enqueue(root.Data);
+		nodes.Enqueue(node);
+		values.Enqueue(node.Data);
 
 		while (nodes.Count > 0)
 		{

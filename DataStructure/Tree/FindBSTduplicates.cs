@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 /*determine if BST has duplicate values
  * solution: in-order traversal and check if current node value equals to prev
 */
 public class FindBSTduplicates
 {
-
 	public static void Main(string[] args)
 	{
 		TreeNode<int> root = DefineBST();
@@ -16,9 +14,7 @@ public class FindBSTduplicates
 		BFS<int> bfs = new BFS<int>();
 		//bfs.Traversal(root);
 
-
 		DFS<int> dfs = new DFS<int>();
-
 
 		dfs.InOrderToList(root);
 		if (dfs.List.Distinct().Count() == dfs.List.Count())
@@ -30,19 +26,14 @@ public class FindBSTduplicates
 			Console.WriteLine("has duplicates");
 		}
 
-
-
 		dfs.InOrderToHashSet(root);
 		foreach (var v in dfs.Set)
 		{
 			Console.WriteLine(v);
 		}
 
-
 		// issue: don't break when finding a duplicate
 		//Console.WriteLine(dfs.InOrderCheckDuplicates(root));
-
-
 
 		dfs.InOrderFindDuplicates(root);
 		foreach (KeyValuePair<int, int> dic in dfs.Dic)
@@ -51,10 +42,6 @@ public class FindBSTduplicates
 		}
 
 	}
-
-
-
-
 
 	private static TreeNode<int> DefineBST()
 	{
@@ -66,7 +53,6 @@ public class FindBSTduplicates
 		//     1   3   7  12
 		//             /\
 		//            6  7
-
 
 		TreeNode<int> node = new TreeNode<int>();
 		node.Data = 5;
@@ -121,7 +107,6 @@ public class TreeNode<T>
 
 public class DFS<T>  //Depth first search, recursion
 {
-
 	public void PreOrder(TreeNode<T> node)
 	{
 		if (node == null) return;
@@ -137,7 +122,6 @@ public class DFS<T>  //Depth first search, recursion
 		Visit(node);
 		InOrder(node.Right);
 	}
-
 
 	public List<T> List = new List<T>();
 	public HashSet<T> Set = new HashSet<T>();

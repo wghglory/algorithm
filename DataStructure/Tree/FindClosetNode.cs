@@ -5,7 +5,6 @@ get closest node for target in BST
 */
 public class IsBST
 {
-
 	public static Node getClosestNode(Node node, int target)
 	{
 		Node pClosest = null;
@@ -49,7 +48,6 @@ public class IsBST
 		//     1   3   7  12
 		//             /\
 		//            6  7
-
 
 		Node node = new Node();
 		node.Data = 5;

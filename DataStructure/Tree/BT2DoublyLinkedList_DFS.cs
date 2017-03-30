@@ -3,38 +3,36 @@ using System;
 // can be used for normal Binary tree in DFS way
 public class BST
 {
-
 	public static void Main(string[] args)
 	{
-
 		BST bst = new BST();
-		bst.createBST();
+		bst.CreateBST();
 
 		bst.BSTDisplay(bst.root, 0);
 
 		Console.Write("\nInOrder Traversal : ");
 		bst.inOrder(bst.root);
 
-		//Node phead = null;
-		//phead = bst.binaryToDoublyLinkedList(bst.root, phead);
-		//if (phead != null)
+		//Node ddlHeadNode = null;
+		//ddlHeadNode = bst.BinaryTree2DoublyLinkedList(bst.root, ddlHeadNode);
+		//if (ddlHeadNode != null)
 		//{
 		//	Console.Write("\nFrom start : ");
-		//	while (phead.Right != null)
+		//	while (ddlHeadNode.Right != null)
 		//	{
-		//		Console.Write(phead.Data + " ");
-		//		phead = phead.Right;
+		//		Console.Write(ddlHeadNode.Data + " ");
+		//		ddlHeadNode = ddlHeadNode.Right;
 		//	}
-		//	Console.Write(phead.Data + " ");
+		//	Console.Write(ddlHeadNode.Data + " ");
 
 		//	Console.Write("\nFrom end : ");
 
-		//	while (phead.Left != null)
+		//	while (ddlHeadNode.Left != null)
 		//	{
-		//		Console.Write(phead.Data + " ");
-		//		phead = phead.Left;
+		//		Console.Write(ddlHeadNode.Data + " ");
+		//		ddlHeadNode = ddlHeadNode.Left;
 		//	}
-		//	Console.Write(phead.Data + " ");
+		//	Console.Write(ddlHeadNode.Data + " ");
 		//}
 
 
@@ -63,7 +61,6 @@ public class BST
 
 	public class Node
 	{
-
 		public Node(string v)
 		{
 			Data = v;
@@ -76,9 +73,8 @@ public class BST
 
 	private Node root;
 
-	public void createBST()
+	public void CreateBST()
 	{
-
 		root = new Node("10");
 		root.Left = new Node("6");
 		root.Right = new Node("14");
@@ -97,7 +93,6 @@ public class BST
 	{
 		if (node != null)
 		{
-
 			BSTDisplay(node.Right, ++numberOfSpace);
 			for (int i = 0; i < numberOfSpace; i++)
 			{
@@ -106,7 +101,6 @@ public class BST
 			Console.Write(node.Data + "\n\n");
 
 			BSTDisplay(node.Left, numberOfSpace);
-
 		}
 	}
 
@@ -118,7 +112,6 @@ public class BST
 			inOrder(node.Left);
 			Console.Write(node.Data + " ");
 			inOrder(node.Right);
-
 		}
 	}
 
@@ -138,15 +131,13 @@ public class BST
 
 
 	/*-----------------------DFS method 1-------------------------*/
-	public Node binaryToDoublyLinkedList(Node node, Node listHead)
+	public Node BinaryTree2DoublyLinkedList(Node node, Node listHead)  //node is binarytree node, listHead is ddl headnode
 	{
-
 		if (node != null)
 		{
-
 			if (node.Left != null)
 			{
-				listHead = binaryToDoublyLinkedList(node.Left, listHead);
+				listHead = BinaryTree2DoublyLinkedList(node.Left, listHead);
 				Node getRightMostLeaf = GetRightMostLeaf(node.Left);
 				getRightMostLeaf.Right = node;
 				node.Left = getRightMostLeaf;
@@ -158,7 +149,7 @@ public class BST
 
 			if (node.Right != null)
 			{
-				listHead = binaryToDoublyLinkedList(node.Right, listHead);
+				listHead = BinaryTree2DoublyLinkedList(node.Right, listHead);
 				Node getLeftMostLeaf = GetLeftMostLeaf(node.Right);
 
 				node.Right = getLeftMostLeaf;
@@ -166,7 +157,6 @@ public class BST
 			}
 		}
 		return listHead;
-
 	}
 
 
@@ -212,5 +202,4 @@ public class BST
 
 		return node;
 	}
-
 }

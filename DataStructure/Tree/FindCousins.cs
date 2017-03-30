@@ -113,7 +113,6 @@ public class FindCousins
 		return level;
 	}
 
-
 	private bool sameParents(TreeNode<int> root, TreeNode<int> x, TreeNode<int> y)
 	{
 		if (root == null)
@@ -131,8 +130,6 @@ public class FindCousins
 				|| sameParents(root.Right, x, y));
 	}
 }
-
-
 
 
 // another thought for below question
@@ -195,7 +192,6 @@ public class CheckIfTwoNodesAreCousins
 
 }
 
-
 public class TreeNode<T>
 {
 	public T Data;
@@ -224,6 +220,4 @@ public class TreeNode<T>
 			return 0;
 		return 1 + CountChildren(node.Left) + CountChildren(node.Right);
 	}
-
-
 }
