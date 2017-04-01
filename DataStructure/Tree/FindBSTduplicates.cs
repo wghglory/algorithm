@@ -16,24 +16,24 @@ public class FindBSTduplicates
 
 		DFS<int> dfs = new DFS<int>();
 
-		dfs.InOrderToList(root);
-		if (dfs.List.Distinct().Count() == dfs.List.Count())
-		{
-			Console.WriteLine("no duplicates");
-		}
-		else
-		{
-			Console.WriteLine("has duplicates");
-		}
+		//dfs.InOrderToList(root);
+		//if (dfs.List.Distinct().Count() == dfs.List.Count())
+		//{
+		//	Console.WriteLine("no duplicates");
+		//}
+		//else
+		//{
+		//	Console.WriteLine("has duplicates");
+		//}
 
-		dfs.InOrderToHashSet(root);
-		foreach (var v in dfs.Set)
-		{
-			Console.WriteLine(v);
-		}
+		//dfs.InOrderToHashSet(root);
+		//foreach (var v in dfs.Set)
+		//{
+		//	Console.WriteLine(v);
+		//}
 
 		// issue: don't break when finding a duplicate
-		//Console.WriteLine(dfs.InOrderCheckDuplicates(root));
+		Console.WriteLine(dfs.InOrderCheckDuplicates(root));
 
 		dfs.InOrderFindDuplicates(root);
 		foreach (KeyValuePair<int, int> dic in dfs.Dic)
@@ -150,18 +150,22 @@ public class DFS<T>  //Depth first search, recursion
 	}
 
 	// check if there is any duplicate, known issue: this continues to call recursively even finding a duplicates and return false, but last call may still return true.
+	// return true if it has duplicates!
 	public bool InOrderCheckDuplicates(TreeNode<T> node)
 	{
-		if (node != null)
+		if (node != null) return false;
+
+		bool result = false;
+
+		InOrderCheckDuplicates(node.Left);
+		if (!Set.Add(node.Data))  // duplicates
 		{
-			InOrderCheckDuplicates(node.Left);
-			if (!Set.Add(node.Data))  // duplicates
-			{
-				return false;
-			}
-			InOrderCheckDuplicates(node.Right);
+			result = true;
+			return result;
 		}
-		return true;
+		InOrderCheckDuplicates(node.Right);
+
+		return result;
 	}
 
 	// dictionary list all values and their appearance count

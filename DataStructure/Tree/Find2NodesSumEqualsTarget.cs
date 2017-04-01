@@ -57,40 +57,34 @@ public class HasTwoNodesEqualsSumBST
 
 	Node getNext(Stack<Node> nodes)
 	{
-		Node pNext = null;
-		if (nodes.Count > 0)
+		Node popNode = null;
+		if (leftStack.Count > 0)
 		{
-			//pNext = nodes.Peek();
-			pNext = nodes.Pop();
-
-			Node pRight = pNext.Right;
-			while (pRight != null)
+			popNode = leftStack.Pop();
+			Node rightOfPopNode = popNode.Right;
+			while (rightOfPopNode != null)
 			{
-				nodes.Push(pRight);
-				pRight = pRight.Left;
+				leftStack.Push(rightOfPopNode);
+				rightOfPopNode = rightOfPopNode.Left;
 			}
 		}
-
-		return pNext;
+		return popNode;
 	}
 
 	Node getPrev(Stack<Node> nodes)
 	{
-		Node pPrev = null;
-		if (nodes.Count > 0)
+		Node popNode = null;
+		if (rightStack.Count > 0)
 		{
-			//pPrev = nodes.Peek();
-			pPrev = nodes.Pop();
-
-			Node pLeft = pPrev.Left;
-			while (pLeft != null)
+			popNode = rightStack.Pop();
+			Node leftOfPopNode = popNode.Left;
+			while (leftOfPopNode != null)
 			{
-				nodes.Push(pLeft);
-				pLeft = pLeft.Right;
+				rightStack.Push(leftOfPopNode);
+				leftOfPopNode = leftOfPopNode.Right;
 			}
 		}
-
-		return pPrev;
+		return popNode;
 	}
 
 	public static void Main(string[] args)

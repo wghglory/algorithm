@@ -140,44 +140,42 @@ public class CheckIfTwoNodesAreCousins
 {
 	public bool areCousins(TreeNode<int> root, TreeNode<int> x, TreeNode<int> y)
 	{
-		// get the heights of both the nodes and return false if heights are not same
-		if (getHeight(root, x, 1) != getHeight(root, y, 1))
-		{
-			return false;
-		}
-		else
-		{
-			// Now check if or not parents are same for both the node
-			if (!sameParents(root, x, y))
-			{
-				return false;
-			}
-			else
-			{
-				return true;
-			}
-		}
+		if (getHeight(root, x, 1) == getHeight(root, y, 1) && !areSameParent(root, x, y)) return true;
+
+		return false;
 	}
 
 	// get level/depth/height of a given node
-	private int getHeight(TreeNode<int> root, TreeNode<int> x, int height)
+	private int getHeight(TreeNode<int> node, TreeNode<int> x, int height)
 	{
-		if (root == null)
+		if (node == null)
 			return 0;
 
-		if (root == x)
+		if (node == x)
 			return height;
 
-		int level = getHeight(root.Left, x, height + 1);
+		int level = getHeight(node.Left, x, height + 1);
 
 		if (level != 0)
 			return level;
 
-		level = getHeight(root.Right, x, height + 1);
+		level = getHeight(node.Right, x, height + 1);
 
 		return level;
 	}
 
+	// longest height from root to leaf
+	static int Height(BinaryTreeNode<int> root)
+	{
+		if (root == null)
+		{
+			return 0;
+		}
+		else
+		{
+			return 1 + Math.Max(Height(root.Left), Height(root.Right));
+		}
+	}
 
 	private bool sameParents(TreeNode<int> root, TreeNode<int> x, TreeNode<int> y)
 	{
