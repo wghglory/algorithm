@@ -5,20 +5,139 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        BinaryTree bt = new BinaryTree();
-        Node root = bt.BuildBST();
+        Node root = new Node(11);
+        Node x1 = new Node(2);
+        Node y1 = new Node(3);
+        root.Left = x1;
+        root.Right = y1;
+        root.Left.Left = new Node(4);
+        root.Right.Left = new Node(6);
+        Node x2 = new Node(7);
+        Node y2 = new Node(9);
+        Node z2 = new Node(8);
+        root.Right.Left.Left = y2;
+        root.Right.Left.Right = z2;
+        root.Left.Left.Left = x2;
 
-        bt.InOrderWithNext(root);
+        //	     11
+        // 	    / \
+        //     2   3
+        //    /   /
+        //   4   6
+        //  /   / \
+        // 7   8   9
 
+
+        //         print path for a given node
+        PrintPathTillTarget(root, z2);
+        PathOfTarget.Reverse();
+        Console.WriteLine(string.Join("-->", PathOfTarget) + "\n");
+
+        //        print path that sums equals to sum
+        PrintPathEqualsSum(root, 14);
+        PathOfSum.Reverse();
+        Console.WriteLine(string.Join("-->", PathOfSum) + "\n");
+
+        //        print path until leaf that sums equals to sum
+        PathOfSum.Clear();
+        PrintPathUntilLeafEqualsSum(root, 24);
+        PathOfSum.Reverse();
+        Console.WriteLine(string.Join("-->", PathOfSum) + "\n");
+
+        //        print all paths
+        PrintAllPath2Leaf(root, new int[100], 0);
+    }
+
+
+    static List<int> PathOfTarget = new List<int>();
+
+    private static bool PrintPathTillTarget(Node node, Node target)
+    {
+        if (node == null) return false;
+
+        if (node.Data == target.Data || PrintPathTillTarget(node.Left, target) ||
+            PrintPathTillTarget(node.Right, target))
+        {
+            PathOfTarget.Add(node.Data);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    static List<int> PathOfSum = new List<int>();
+
+    private static bool PrintPathUntilLeafEqualsSum(Node node, int sum)
+    {
+        if (node == null) return false;
+
+        //leaf and sum satisfy requirement
+        if (node.Left == null && node.Right == null && node.Data == sum)
+        {
+            PathOfSum.Add(node.Data);
+            return true;
+        }
+
+        if (PrintPathUntilLeafEqualsSum(node.Left, sum - node.Data) ||
+            PrintPathUntilLeafEqualsSum(node.Right, sum - node.Data))
+        {
+            PathOfSum.Add(node.Data);
+            return true;
+        }
+
+        return false;
+    }
+
+    private static bool PrintPathEqualsSum(Node node, int sum)
+    {
+        if (node == null) return false;
+
+        // sum satisfy requirement
+        if (node.Data == sum)
+        {
+            PathOfSum.Add(node.Data);
+            return true;
+        }
+
+        if (PrintPathEqualsSum(node.Left, sum - node.Data) || PrintPathEqualsSum(node.Right, sum - node.Data))
+        {
+            PathOfSum.Add(node.Data);
+            return true;
+        }
+
+        return false;
+    }
+
+
+    private static void PrintAllPath2Leaf(Node root, int[] arr, int len)
+    {
+        if (root == null) return;
+
+        arr[len] = root.Data;
+        if (root.Left == null && root.Right == null)
+        {
+            for (int i = 0; i < len; i++)
+            {
+                Console.Write(arr[i] + "-->");
+            }
+            Console.Write(arr[len] + "\n");
+        }
+
+        len++;
+
+        PrintAllPath2Leaf(root.Left, arr, len);
+        PrintAllPath2Leaf(root.Right, arr, len);
     }
 }
 
 public class Node
 {
     public int Data { get; set; }
+
     public Node Left { get; set; }
     public Node Right { get; set; }
-    public Node Next { get; set; }
 
     public Node(int data)
     {
@@ -166,8 +285,6 @@ public class BinaryTree
     {
         if (node == null) return;
 
-        Node root = node;
-
         Stack<Node> s = new Stack<Node>();
 
         //push left path 7-4-2-1, 1 is top
@@ -201,15 +318,10 @@ public class BinaryTree
         9 has left, inner while loop push 8, stack 9-8,
         8 pop, then 9 pop, stack empty, 9 has rightchild 10, 10 push and pop
         */
-        int prev = int.MinValue;
-        Node prevNode = null;
         while (s.Count > 0)
         {
             Node current = s.Pop();
-
-            Console.Write($"current:{current.Data}, prev:{prev} \n");
-            if (prevNode != null) prevNode.Next = current;
-
+            Console.Write(current.Data + " ");
             Node rightChildOfCurrnet = current.Right;
 
             //take 7-8-9 for example
@@ -219,56 +331,7 @@ public class BinaryTree
                 s.Push(rightChildOfCurrnet);
                 rightChildOfCurrnet = rightChildOfCurrnet.Left;
             }
-
-            prev = current.Data;
-            prevNode = current;
         }
-
-        TestNextPointer(root);
-    }
-
-    private void TestNextPointer(Node root)
-    {
-        while (root.Left != null)
-        {
-            root = root.Left;
-        }
-        while (root != null)
-        {
-            Console.Write(root.Data + " ");
-            root = root.Next;
-        }
-    }
-
-
-    //depth first search
-    private Node prev;
-    public void InOrderWithNext(Node node)
-    {
-        if (node == null) return;
-
-        InOrderWithNext(node.Left);
-
-        if (prev != null)
-        {
-            prev.Next = node;
-            Console.Write($"current:{node.Data}, prev:{prev.Data}\n");
-        }
-        prev = node;
-
-        InOrderWithNext(node.Right);
-    }
-
-    //depth first search
-    public void InOrderWithParent(Node node, Node parent)
-    {
-        if (node == null) return;
-
-        InOrderWithParent(node.Left, node);
-
-        if (parent != null) Console.Write($"current:{node.Data}, parent:{parent.Data}\n");
-
-        InOrderWithParent(node.Right, node);
     }
 }
 

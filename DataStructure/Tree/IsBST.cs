@@ -48,51 +48,42 @@ public class IsBST
 
 	public bool isBST2(Node node)
 	{
-		if (node == null)
-		{
-			return true;
-		}
+		if (root == null) return true;
 
-		Stack<Node> stack = new Stack<Node>();
-		int prev = int.MinValue;
-		int current;
-		while (true)
-		{
-			// push all smaller data into stack, top is smallest if BST
-			if (node != null)
-			{
-				stack.Push(node);
-				node = node.Left;
-			}
-			else
-			{
-				if (stack.Count == 0)
-				{
-					break;
-				}
-				node = stack.Pop();
-				current = node.Data;
-				if (current < prev)
-				{
-					return false;
-				}
-				prev = current;
-				node = node.Right;
-			}
-		}
-		return true;
+        Stack<Node> s = new Stack<Node>();
+
+        while (root != null)
+        {
+            s.Push(root);
+            root = root.Left;
+        }
+
+        int prev = int.MinValue;
+        while (s.Count > 0)
+        {
+            Node current = s.Pop();
+
+            Console.WriteLine($"prevData: {prev}, currentData: {current.Data}");
+
+            if (prev > current.Data)
+            {
+                return false;
+            }
+
+            Node rightOfCurrent = current.Right;
+
+            while (rightOfCurrent != null)
+            {
+                s.Push(rightOfCurrent);
+                rightOfCurrent = rightOfCurrent.Left;
+            }
+
+            prev = current.Data;
+        }
+
+        return true;
 	}
 
-	// in order traverse, every next node >= current
-	public bool isBST3(Node node, int prev)
-	{
-		if (node == null)
-			return true;
-
-		return isBST3(node.Left, prev) // previous node
-			&& (node.Data >= prev) // current node
-			&& isBST3(node.Right, prev = node.Data); // next node
-	}
 
 	public static void Main(string[] args)
 	{
