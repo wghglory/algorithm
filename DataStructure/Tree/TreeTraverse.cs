@@ -148,26 +148,19 @@ public class BFS<T>  //breath first search, queue while
 
 	public void Traversal(TreeNode<T> root)
 	{
-		if (root != null)
+		if (root == null) return;
+
+		queue.Enqueue(root);
+
+		while (queue.Count != 0)
 		{
-			queue.Enqueue(root);
+			TreeNode<T> node = queue.Dequeue();
 
-			while (queue.Count != 0)
-			{
-				TreeNode<T> node = queue.Dequeue();
+			Console.Write($"{node.Data} ");
 
-				Console.Write($"{node.Data} ");
-
-				if (node.Left != null)
-				{
-					queue.Enqueue(node.Left);
-				}
-
-				if (node.Right != null)
-				{
-					queue.Enqueue(node.Right);
-				}
-			}
+			if (node.Left != null) queue.Enqueue(node.Left);
+			if (node.Right != null) queue.Enqueue(node.Right);
 		}
+
 	}
 }
