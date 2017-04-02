@@ -52,6 +52,15 @@ public class Convert
 			dllNode.Right = leftNode;
 		}
 
+		// // This works as well: create a DLL node based on tree left node
+		// Node leftNode = ConvertBT2DLL_PreOrder(node.Left);
+		// if (leftNode != null)
+		// {
+		// 	// link leftNode to dllNode, dllNode is 1, leftNode is 2, 1 <==> 2
+		// 	leftNode.Left = dllNode;
+		// 	dllNode.Right = leftNode;
+		// }
+
 		if (node.Right != null)
 		{
 			// linked rightNode to tailNode, tailNode is 2, rightNode is 3, 1 <==> 2 <==> 3

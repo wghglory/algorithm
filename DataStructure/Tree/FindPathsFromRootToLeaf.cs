@@ -42,12 +42,11 @@ class BinaryTree
 		/* it's a leaf, so print the path that led to here */
 		if (node.left == null && node.right == null)
 			printArray(path, pathLen);
-		else
-		{
-			/* otherwise try both subtrees */
-			printPathsRecur(node.left, path, pathLen);
-			printPathsRecur(node.right, path, pathLen);
-		}
+
+		/* otherwise try both subtrees */
+		printPathsRecur(node.left, path, pathLen);
+		printPathsRecur(node.right, path, pathLen);
+
 	}
 
 	/* Utility function that prints out an array on a line. */

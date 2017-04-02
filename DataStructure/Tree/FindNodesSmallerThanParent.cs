@@ -13,7 +13,29 @@ namespace FindNodesSmallerThanParent
 		{
 			TreeNode<int> root = DefineDataNode();
 			Console.Write(CountSmallerNodesNum(root));
+
+			Console.Write(CountSmaller(root, int.MinValue));
+			Console.WriteLine(string.Join(",", smaller));
+
 			Console.ReadKey();
+		}
+
+		public static List<int> smaller = new List<int>();
+		public static int count;
+		static int CountSmaller(TreeNode<int> node, int pVal)
+		{
+			if (node == null) return 0;
+
+			if (node.Data < pVal)
+			{
+				count++;
+				smaller.Add(node.Data);
+			}
+
+			CountSmaller(node.Left, node.Data);
+			CountSmaller(node.Right, node.Data);
+
+			return count;
 		}
 
 		public static int CountSmallerNodesNum(TreeNode<int> node)   //DFS

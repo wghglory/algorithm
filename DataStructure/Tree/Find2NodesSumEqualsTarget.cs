@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 
+//if not a binary search tree, can traverse and push all into array,
+//array can sort and solve
+//array can be used to build a BST as well
 
 /**
  * http://codercareer.blogspot.com/2013/03/no-46-nodes-with-sum-in-binary-search.html

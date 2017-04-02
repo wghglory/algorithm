@@ -97,16 +97,13 @@ public class FindCousins
 	// get level/depth/height of a given node
 	private int getHeight(TreeNode<int> root, TreeNode<int> givenNode, int height)
 	{
-		if (root == null)
-			return 0;
+		if (root == null)  return 0;
 
-		if (root == givenNode)
-			return height;
+		if (root == givenNode)  return height;
 
 		int level = getHeight(root.Left, givenNode, height + 1);
 
-		if (level != 0)
-			return level;
+		if (level != 0)  return level;  //givenNode is not on left node
 
 		level = getHeight(root.Right, givenNode, height + 1);
 
