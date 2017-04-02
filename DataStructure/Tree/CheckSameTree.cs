@@ -83,14 +83,8 @@ public class BinarySearchTree
 
 	public bool SameTree(Node root1, Node root2)
 	{
-		if (root1 == null && root2 == null)
-		{
-			return true;
-		}
-		if (root1 == null || root2 == null)
-		{
-			return false;
-		}
+		if (root1 == null && root2 == null) return true;
+		if (root1 == null || root2 == null) return false;
 
 		return root1.Data == root2.Data &&
 				SameTree(root1.Left, root2.Left) &&
