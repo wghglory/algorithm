@@ -46,42 +46,42 @@ public class IsBST
 	}
 
 
-	public bool isBST2(Node node)
+	public bool isBST2(Node root)
 	{
 		if (root == null) return true;
 
-        Stack<Node> s = new Stack<Node>();
+		Stack<Node> s = new Stack<Node>();
 
-        while (root != null)
-        {
-            s.Push(root);
-            root = root.Left;
-        }
+		while (root != null)
+		{
+			s.Push(root);
+			root = root.Left;
+		}
 
-        int prev = int.MinValue;
-        while (s.Count > 0)
-        {
-            Node current = s.Pop();
+		int prev = int.MinValue;
+		while (s.Count > 0)
+		{
+			Node current = s.Pop();
 
-            Console.WriteLine($"prevData: {prev}, currentData: {current.Data}");
+			Console.WriteLine($"prevData: {prev}, currentData: {current.Data}");
 
-            if (prev > current.Data)
-            {
-                return false;
-            }
+			if (prev > current.Data)
+			{
+				return false;
+			}
+			prev = current.Data;
 
-            Node rightOfCurrent = current.Right;
+			Node rightOfCurrent = current.Right;
 
-            while (rightOfCurrent != null)
-            {
-                s.Push(rightOfCurrent);
-                rightOfCurrent = rightOfCurrent.Left;
-            }
+			while (rightOfCurrent != null)
+			{
+				s.Push(rightOfCurrent);
+				rightOfCurrent = rightOfCurrent.Left;
+			}
 
-            prev = current.Data;
-        }
+		}
 
-        return true;
+		return true;
 	}
 
 
@@ -93,7 +93,6 @@ public class IsBST
 
 		Console.WriteLine(isBST.isBST(root));
 		Console.WriteLine(isBST.isBST2(root));
-		Console.WriteLine(isBST.isBST3(root, int.MinValue));
 	}
 
 	private static Node DefineBST()

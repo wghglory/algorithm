@@ -27,22 +27,11 @@ public class BSTSearch
 
 	public Node search(Node root, int key)
 	{
-		if (root == null)
-		{
-			return null;
-		}
-		if (root.data == key)
-		{
-			return root;
-		}
-		else if (root.data < key)
-		{
-			return search(root.right, key);
-		}
-		else
-		{
-			return search(root.left, key);
-		}
+		if (root == null) return null;
+
+		if (root.data == key) return root;
+		else if (root.data < key) return search(root.right, key);
+		else return search(root.left, key);
 	}
 
 	public static void Main(string[] args)

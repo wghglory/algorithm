@@ -23,10 +23,8 @@ public class SizeOfBinaryTree
 	// how many count of node?
 	public int size(Node root)
 	{
-		if (root == null)
-		{
-			return 0;
-		}
+		if (root == null) return 0;
+		
 		return size(root.Left) + size(root.Right) + 1;
 	}
 

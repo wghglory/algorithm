@@ -61,10 +61,8 @@ public class Program
             PathOfTarget.Add(node.Data);
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
     static List<int> PathOfSum = new List<int>();
@@ -116,6 +114,8 @@ public class Program
         if (root == null) return;
 
         arr[len] = root.Data;
+
+        //print function
         if (root.Left == null && root.Right == null)
         {
             for (int i = 0; i < len; i++)
@@ -322,14 +322,14 @@ public class BinaryTree
         {
             Node current = s.Pop();
             Console.Write(current.Data + " ");
-            Node rightChildOfCurrnet = current.Right;
+            Node rightChildOfCurrent = current.Right;
 
             //take 7-8-9 for example
             //current is 7, rightChildOfCurrent 9, we need to push 10 first, then 8
-            while (rightChildOfCurrnet != null)
+            while (rightChildOfCurrent != null)
             {
-                s.Push(rightChildOfCurrnet);
-                rightChildOfCurrnet = rightChildOfCurrnet.Left;
+                s.Push(rightChildOfCurrent);
+                rightChildOfCurrent = rightChildOfCurrent.Left;
             }
         }
     }

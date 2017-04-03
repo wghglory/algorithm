@@ -21,6 +21,10 @@ class Program
 		s1.Right.Right = s7;
 
 		Console.WriteLine(Convert.ToInt32(FindParent(s1, 20)));
+		Console.WriteLine(Convert.ToInt32(FindParentNode2(s1, s4).Data));
+
+		FindParentNode(s1, 20);
+		Console.WriteLine(parent);
 
 		Console.ReadKey();
 	}
@@ -66,6 +70,28 @@ class Program
 
 		FindParentNode(root.Right, target);
 		if (root.Right != null && root.Right.Data == target) parent = root.Data;
+	}
+
+	private static Node FindParentNode2(Node root, Node x)
+	{
+		if (root == null) return null;
+
+		if (root == x) return null;
+
+		if (root.Left == x || root.Right == x)
+		{
+			return root;
+		}
+
+		Node left = FindParentNode2(root.Left, x);
+
+		if (left != null) return left;
+
+		Node right = FindParentNode2(root.Right, x);
+
+		if (right != null) return right;
+
+		return null;
 	}
 }
 

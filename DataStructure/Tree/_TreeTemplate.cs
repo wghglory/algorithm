@@ -210,14 +210,14 @@ public class BinaryTree
             Console.Write($"current:{current.Data}, prev:{prev} \n");
             if (prevNode != null) prevNode.Next = current;
 
-            Node rightChildOfCurrnet = current.Right;
+            Node rightChildOfCurrent = current.Right;
 
             //take 7-8-9 for example
             //current is 7, rightChildOfCurrent 9, we need to push 10 first, then 8
-            while (rightChildOfCurrnet != null)
+            while (rightChildOfCurrent != null)
             {
-                s.Push(rightChildOfCurrnet);
-                rightChildOfCurrnet = rightChildOfCurrnet.Left;
+                s.Push(rightChildOfCurrent);
+                rightChildOfCurrent = rightChildOfCurrent.Left;
             }
 
             prev = current.Data;
