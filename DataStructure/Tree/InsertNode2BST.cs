@@ -11,82 +11,85 @@ using System;
 
 public class Node
 {
-	public Node left;
-	public Node right;
-	public int data;
+    public Node Left;
+    public Node Right;
+    public int Data;
 
-	public static Node newNode(int data)
-	{
-		Node n = new Node();
-		n.left = null;
-		n.right = null;
-		n.data = data;
-		return n;
-	}
+    public Node(int data)
+    {
+        Data = data;
+    }
 }
 
 public class BinarySearchTree
 {
-	public Node addNode(int data, Node node)
-	{
-		Node root = node;
-		Node n = Node.newNode(data);
-		if (node == null)
-		{
-			node = n;
-			return node;
-		}
+    public Node AddNode(Node node, int data)
+    {
+        Node root = node;
 
-		Node prev = null;  //the leaf that will add new node
-		while (node != null)
-		{
-			prev = node;
-			if (node.data < data)
-			{
-				node = node.right;
-			}
-			else
-			{
-				node = node.left;
-			}
-		}
+        if (node == null)
+        {
+            node = new Node(data);
+            return node;
+        }
 
-		//add new data to left or right leaf
-		if (prev.data < data)
-		{
-			prev.right = n;
-		}
-		else
-		{
-			prev.left = n;
-		}
-		return root;  //not the new added node
-	}
+        Node leaf = null;  //the leaf that will add new node
+        while (node != null)
+        {
+            leaf = node;
+            if (node.Data < data) node = node.Right;
+            else node = node.Left;
+        }
 
-	public int height(Node root)
-	{
-		if (root == null)
-		{
-			return 0;
-		}
-		int leftHeight = height(root.left);
-		int rightHeight = height(root.right);
-		return Math.Max(leftHeight, rightHeight) + 1;
-	}
+        //add new data to left or right leaf
+        if (leaf.Data < data) leaf.Right = new Node(data);
+        else leaf.Left = new Node(data);
 
-	public static void Main(string[] args)
-	{
-		BinarySearchTree bt = new BinarySearchTree();
-		Node root = null;
-		root = bt.addNode(10, root);
-		root = bt.addNode(15, root);
-		root = bt.addNode(5, root);
-		root = bt.addNode(7, root);
-		root = bt.addNode(19, root);
-		root = bt.addNode(20, root);
-		root = bt.addNode(-1, root);
-		root = bt.addNode(21, root);
-		Console.WriteLine(bt.height(root));
+        return root;  //not the new added node
+    }
 
-	}
+    public int Height(Node root)
+    {
+        if (root == null)
+        {
+            return -1;
+        }
+
+        return Math.Max(Height(root.Left), Height(root.Right)) + 1;
+    }
+
+    public static void Main(string[] args)
+    {
+        BinarySearchTree bt = new BinarySearchTree();
+        Node root = null;
+
+        root = bt.AddNode(root, 10);
+        root = bt.AddNode(root, 15);
+        root = bt.AddNode(root, 5);
+        root = bt.AddNode(root, 7);
+        root = bt.AddNode(root, 19);
+        root = bt.AddNode(root, 20);
+        root = bt.AddNode(root, -1);
+        root = bt.AddNode(root, 21);
+
+        Console.WriteLine(bt.Height(root));
+
+        Node root2 = List2Bst(null, new[] { 1, 2, 3, 4, 5, 6, 7 }, 0, 7 - 1);
+        Console.WriteLine(bt.Height(root2));
+        Console.ReadKey();
+    }
+
+    private static Node List2Bst(Node root, int[] arr, int left, int right)
+    {
+        if (root != null) return null;
+
+        int mid = (left + right) / 2;
+
+        root = new Node(arr[mid]);
+
+        if (left <= mid - 1) root.Left = List2Bst(root.Left, arr, left, mid - 1);
+        if (mid + 1 <= right) root.Right = List2Bst(root.Right, arr, mid + 1, right);
+
+        return root;
+    }
 }
