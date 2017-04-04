@@ -166,7 +166,7 @@ public class CheckIfTwoNodesAreCousins
 	{
 		if (root == null)
 		{
-			return 0;
+			return -1;
 		}
 		else
 		{
