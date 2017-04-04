@@ -10,6 +10,12 @@ public class Program
 
         bt.InOrderWithNext(root);
 
+        InOrderIterator it = new InOrderIterator(root);
+        while (it.HasNext())
+        {
+            Console.Write(it.MoveNext().Data + " ");
+        }
+        Console.ReadKey();
     }
 }
 
@@ -278,7 +284,7 @@ public class InOrderIterator
     public InOrderIterator(Node root)
     {
         NodeStack = new Stack<Node>();
-        FillStack(root);
+        FillStack2(root);
     }
 
     // iterator
@@ -308,5 +314,33 @@ public class InOrderIterator
         FillStack(node.Right);
         NodeStack.Push(node);
         FillStack(node.Left);
+    }
+
+    void FillStack2(Node node)
+    {
+        if (node == null) return;
+
+        Stack<Node> s = new Stack<Node>();
+
+        while (node != null)
+        {
+            s.Push(node);
+            node = node.Right;
+        }
+
+        while (s.Count > 0)
+        {
+            Node current = s.Pop();
+
+            NodeStack.Push(current);
+
+            Node leftChild = current.Left;
+
+            while (leftChild != null)
+            {
+                s.Push(leftChild);
+                leftChild = leftChild.Right;
+            }
+        }
     }
 }
